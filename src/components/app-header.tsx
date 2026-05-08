@@ -9,10 +9,13 @@ const navItems = [
   { label: "Estatísticas", href: "/estatisticas" },
   { label: "Nova Partida", href: "/nova-partida" },
 ];
+const placeholderSymbol = "[□]";
 
 export function AppHeader() {
   const pathname = usePathname();
   const isSettingsActive = pathname === "/configuracoes";
+  const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
+    `app-header__link${isSettings ? " app-header__settings" : ""}${isActive ? " app-header__link--active" : ""}`;
 
   return (
     <header className="app-header">
@@ -28,11 +31,11 @@ export function AppHeader() {
           return (
             <Link
               key={item.href}
-              className={`app-header__link${isActive ? " app-header__link--active" : ""}`}
+              className={getLinkClassName(isActive)}
               href={item.href}
               aria-current={isActive ? "page" : undefined}
             >
-              <span>[□]</span>
+              <span>{placeholderSymbol}</span>
               <span>{item.label}</span>
             </Link>
           );
@@ -40,11 +43,11 @@ export function AppHeader() {
       </nav>
 
       <Link
-        className={`app-header__link app-header__settings${isSettingsActive ? " app-header__link--active" : ""}`}
+        className={getLinkClassName(isSettingsActive, true)}
         href="/configuracoes"
         aria-current={isSettingsActive ? "page" : undefined}
       >
-        <span>[□]</span>
+        <span>{placeholderSymbol}</span>
         <span>Configurações</span>
       </Link>
     </header>
