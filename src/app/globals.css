@@ -47,6 +47,7 @@ body {
 }
 
 .app-header__link {
+  min-height: 44px;
   height: 100%;
   display: inline-flex;
   align-items: center;
