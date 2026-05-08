@@ -9,13 +9,15 @@ const navItems = [
   { label: "Estatísticas", href: "/estatisticas" },
   { label: "Nova Partida", href: "/nova-partida" },
 ];
-const placeholderSymbol = "[□]";
 
 export function AppHeader() {
   const pathname = usePathname();
   const isSettingsActive = pathname === "/configuracoes";
+  const placeholderSymbol = "[□]";
   const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
-    `app-header__link${isSettings ? " app-header__settings" : ""}${isActive ? " app-header__link--active" : ""}`;
+    ["app-header__link", isSettings && "app-header__settings", isActive && "app-header__link--active"]
+      .filter(Boolean)
+      .join(" ");
 
   return (
     <header className="app-header">
