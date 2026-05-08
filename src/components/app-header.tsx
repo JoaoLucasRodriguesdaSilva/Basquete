@@ -9,6 +9,7 @@ const navItems = [
   { label: "Estatísticas", href: "/estatisticas" },
   { label: "Nova Partida", href: "/nova-partida" },
 ];
+const iconPlaceholder = "[□]";
 
 const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
   ["app-header__link", isSettings && "app-header__settings", isActive && "app-header__link--active"]
@@ -18,7 +19,6 @@ const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
 export function AppHeader() {
   const pathname = usePathname();
   const isSettingsActive = pathname === "/configuracoes";
-  const iconPlaceholder = "[□]";
 
   return (
     <header className="app-header">
