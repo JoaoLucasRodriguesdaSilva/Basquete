@@ -21,28 +21,28 @@ export default function RootLayout({
           </div>
 
           <nav className="app-header__nav" aria-label="Navegação principal">
-            <a className="app-header__link app-header__link--active" href="#">
+            <button className="app-header__link app-header__link--active" type="button">
               <span>[□]</span>
               <span>Partida</span>
-            </a>
-            <a className="app-header__link" href="#">
+            </button>
+            <button className="app-header__link" type="button">
               <span>[□]</span>
               <span>Histórico</span>
-            </a>
-            <a className="app-header__link" href="#">
+            </button>
+            <button className="app-header__link" type="button">
               <span>[□]</span>
               <span>Estatísticas</span>
-            </a>
-            <a className="app-header__link" href="#">
+            </button>
+            <button className="app-header__link" type="button">
               <span>[□]</span>
               <span>Nova Partida</span>
-            </a>
+            </button>
           </nav>
 
-          <a className="app-header__link app-header__settings" href="#">
+          <button className="app-header__link app-header__settings" type="button">
             <span>[□]</span>
             <span>Configurações</span>
-          </a>
+          </button>
         </header>
         {children}
       </body>
