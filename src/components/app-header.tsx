@@ -12,6 +12,7 @@ const navItems = [
 
 export function AppHeader() {
   const pathname = usePathname();
+  const isSettingsActive = pathname === "/configuracoes";
 
   return (
     <header className="app-header">
@@ -29,7 +30,6 @@ export function AppHeader() {
               key={item.href}
               className={`app-header__link${isActive ? " app-header__link--active" : ""}`}
               href={item.href}
-              aria-label={item.label}
               aria-current={isActive ? "page" : undefined}
             >
               <span>[□]</span>
@@ -40,12 +40,9 @@ export function AppHeader() {
       </nav>
 
       <Link
-        className={`app-header__link app-header__settings${
-          pathname === "/configuracoes" ? " app-header__link--active" : ""
-        }`}
+        className={`app-header__link app-header__settings${isSettingsActive ? " app-header__link--active" : ""}`}
         href="/configuracoes"
-        aria-label="Configurações"
-        aria-current={pathname === "/configuracoes" ? "page" : undefined}
+        aria-current={isSettingsActive ? "page" : undefined}
       >
         <span>[□]</span>
         <span>Configurações</span>
