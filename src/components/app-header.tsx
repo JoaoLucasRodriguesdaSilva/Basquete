@@ -10,14 +10,15 @@ const navItems = [
   { label: "Nova Partida", href: "/nova-partida" },
 ];
 
+const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
+  ["app-header__link", isSettings && "app-header__settings", isActive && "app-header__link--active"]
+    .filter(Boolean)
+    .join(" ");
+
 export function AppHeader() {
   const pathname = usePathname();
   const isSettingsActive = pathname === "/configuracoes";
-  const placeholderSymbol = "[□]";
-  const getLinkClassName = (isActive: boolean, isSettings?: boolean) =>
-    ["app-header__link", isSettings && "app-header__settings", isActive && "app-header__link--active"]
-      .filter(Boolean)
-      .join(" ");
+  const iconPlaceholder = "[□]";
 
   return (
     <header className="app-header">
@@ -37,7 +38,7 @@ export function AppHeader() {
               href={item.href}
               aria-current={isActive ? "page" : undefined}
             >
-              <span>{placeholderSymbol}</span>
+              <span>{iconPlaceholder}</span>
               <span>{item.label}</span>
             </Link>
           );
@@ -49,7 +50,7 @@ export function AppHeader() {
         href="/configuracoes"
         aria-current={isSettingsActive ? "page" : undefined}
       >
-        <span>{placeholderSymbol}</span>
+        <span>{iconPlaceholder}</span>
         <span>Configurações</span>
       </Link>
     </header>
