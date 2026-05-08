@@ -4,3 +4,70 @@ body {
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
+
+body {
+  background: #020a1e;
+  color: #fff;
+}
+
+.app-header {
+  min-height: 48px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(90deg, #020917 0%, #06122d 60%, #001129 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.app-header__title {
+  font-size: 31px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.app-header__symbol {
+  color: #f4a300;
+  font-weight: 700;
+}
+
+.app-header__nav {
+  display: flex;
+  align-items: stretch;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.app-header__link {
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 18px;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+}
+
+.app-header__link:hover {
+  color: #fff;
+}
+
+.app-header__link--active {
+  color: #f4a300;
+  border-bottom-color: #f4a300;
+}
+
+.app-header__settings {
+  flex-shrink: 0;
+}
