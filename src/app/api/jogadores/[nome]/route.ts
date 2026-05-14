@@ -9,7 +9,8 @@ interface Params {
 
 export async function GET(_: Request, { params }: Params) {
   const { nome } = await params;
-  const jogador = buscarJogador(nome);
+  const nomeDecodificado = decodeURIComponent(nome).trim();
+  const jogador = buscarJogador(nomeDecodificado);
 
   if (!jogador) {
     return NextResponse.json({ error: "Jogador não encontrado." }, { status: 404 });
@@ -20,30 +21,30 @@ export async function GET(_: Request, { params }: Params) {
 
 export async function PUT(request: Request, { params }: Params) {
   const { nome } = await params;
+  const nomeDecodificado = decodeURIComponent(nome).trim();
   const body: unknown = await request.json();
 
   if (!isJogador(body)) {
     return NextResponse.json({ error: "Dados de jogador inválidos." }, { status: 400 });
   }
 
-  const jogadorComNovoNome = buscarJogador(body.nome);
+  const resultado = await atualizarJogador(nomeDecodificado, body);
 
-  if (jogadorComNovoNome && body.nome !== nome) {
+  if (!resultado.sucesso && resultado.motivo === "duplicado") {
     return NextResponse.json({ error: "Já existe jogador com esse nome." }, { status: 409 });
   }
 
-  const atualizado = atualizarJogador(nome, body);
-
-  if (!atualizado) {
+  if (!resultado.sucesso) {
     return NextResponse.json({ error: "Jogador não encontrado." }, { status: 404 });
   }
 
-  return NextResponse.json(atualizado);
+  return NextResponse.json(resultado.jogador);
 }
 
 export async function DELETE(_: Request, { params }: Params) {
   const { nome } = await params;
-  const removido = removerJogador(nome);
+  const nomeDecodificado = decodeURIComponent(nome).trim();
+  const removido = await removerJogador(nomeDecodificado);
 
   if (!removido) {
     return NextResponse.json({ error: "Jogador não encontrado." }, { status: 404 });

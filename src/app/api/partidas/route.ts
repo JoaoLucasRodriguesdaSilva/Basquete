@@ -14,5 +14,5 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Dados de partida inválidos." }, { status: 400 });
   }
 
-  return NextResponse.json(criarPartida(body), { status: 201 });
+  return NextResponse.json(await criarPartida(body), { status: 201 });
 }

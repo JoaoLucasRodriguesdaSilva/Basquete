@@ -9,7 +9,8 @@ interface Params {
 
 export async function GET(_: Request, { params }: Params) {
   const { id } = await params;
-  const partida = buscarPartida(id);
+  const idDecodificado = decodeURIComponent(id);
+  const partida = buscarPartida(idDecodificado);
 
   if (!partida) {
     return NextResponse.json({ error: "Partida não encontrada." }, { status: 404 });
@@ -20,24 +21,26 @@ export async function GET(_: Request, { params }: Params) {
 
 export async function PUT(request: Request, { params }: Params) {
   const { id } = await params;
+  const idDecodificado = decodeURIComponent(id);
   const body: unknown = await request.json();
 
   if (!isPartida(body)) {
     return NextResponse.json({ error: "Dados de partida inválidos." }, { status: 400 });
   }
 
-  const atualizada = atualizarPartida(id, body);
+  const resultado = await atualizarPartida(idDecodificado, body);
 
-  if (!atualizada) {
+  if (!resultado.sucesso) {
     return NextResponse.json({ error: "Partida não encontrada." }, { status: 404 });
   }
 
-  return NextResponse.json(atualizada);
+  return NextResponse.json(resultado.partida);
 }
 
 export async function DELETE(_: Request, { params }: Params) {
   const { id } = await params;
-  const removida = removerPartida(id);
+  const idDecodificado = decodeURIComponent(id);
+  const removida = await removerPartida(idDecodificado);
 
   if (!removida) {
     return NextResponse.json({ error: "Partida não encontrada." }, { status: 404 });

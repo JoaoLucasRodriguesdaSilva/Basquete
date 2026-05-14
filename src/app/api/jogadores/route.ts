@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { buscarJogador, criarJogador, listarJogadores } from "@/lib/store";
+import { criarJogador, listarJogadores } from "@/lib/store";
 import { isJogador } from "@/lib/validation";
 
 export async function GET() {
@@ -14,9 +14,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Dados de jogador inválidos." }, { status: 400 });
   }
 
-  if (buscarJogador(body.nome)) {
+  const resultado = await criarJogador(body);
+
+  if (!resultado.sucesso) {
     return NextResponse.json({ error: "Jogador já existe." }, { status: 409 });
   }
 
-  return NextResponse.json(criarJogador(body), { status: 201 });
+  return NextResponse.json(resultado.jogador, { status: 201 });
 }

@@ -16,6 +16,7 @@ export function isJogador(value: unknown): value is Jogador {
   return (
     typeof nome === "string" &&
     nome.trim().length > 0 &&
+    typeof pontos === "number" &&
     Number.isInteger(pontos) &&
     pontos >= 0
   );
@@ -43,12 +44,14 @@ export function isPartida(value: unknown): value is Partida {
     CRONOMETRO_PERIODO_REGEX.test(cronometroPeriodo) &&
     typeof time1 === "string" &&
     time1.trim().length > 0 &&
+    typeof pontos1 === "number" &&
     Number.isInteger(pontos1) &&
     pontos1 >= 0 &&
     Array.isArray(jogadores1) &&
     jogadores1.every(isJogador) &&
     typeof time2 === "string" &&
     time2.trim().length > 0 &&
+    typeof pontos2 === "number" &&
     Number.isInteger(pontos2) &&
     pontos2 >= 0 &&
     Array.isArray(jogadores2) &&
