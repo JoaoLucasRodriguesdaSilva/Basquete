@@ -84,7 +84,7 @@ export function AvancarPeriodo(): Partida {
 }
 
 export function IniciarCronometro(): boolean {
-  const partida = garantirPartida();
+  garantirPartida();
 
   if (cronometroTravadoNoFim || cronometroAtivo) {
     return false;
@@ -109,10 +109,10 @@ export function IniciarCronometro(): boolean {
     partidaAtual.cronometroPeriodo = formatarCronometro(proximoSegundo);
   }, 1000);
 
-  return !!partida;
+  return true;
 }
 
-export function PausarCronometro() {
+export function PausarCronometro(): void {
   limparCronometroAtivo();
 }
 
@@ -144,10 +144,10 @@ export function NovoJogador(time: 1 | 2, nome: string): Jogador {
   return { ...jogador };
 }
 
-export function AdicionarPonto(jogador: string, ponto: number): Jogador {
+export function AdicionarPonto(jogador: string, pontos: number): Jogador {
   const partida = garantirPartida();
 
-  if (!Number.isInteger(ponto) || ponto <= 0) {
+  if (!Number.isInteger(pontos) || pontos <= 0) {
     throw new Error("Pontuação inválida.");
   }
 
@@ -160,15 +160,19 @@ export function AdicionarPonto(jogador: string, ponto: number): Jogador {
     throw new Error("Jogador não encontrado.");
   }
 
-  jogadorEncontrado.pontos += ponto;
+  jogadorEncontrado.pontos += pontos;
   return { ...jogadorEncontrado };
 }
 
 export function OrdenarJogadores(time: 1 | 2): Jogador[] {
   const partida = garantirPartida();
-  const jogadores = obterJogadoresPorTime(partida, time);
+  const jogadores = [...obterJogadoresPorTime(partida, time)].sort((a, b) => b.pontos - a.pontos);
 
-  jogadores.sort((a, b) => b.pontos - a.pontos);
+  if (time === 1) {
+    partida.jogadores1 = jogadores;
+  } else {
+    partida.jogadores2 = jogadores;
+  }
 
   return jogadores.map((jogador) => ({ ...jogador }));
 }
